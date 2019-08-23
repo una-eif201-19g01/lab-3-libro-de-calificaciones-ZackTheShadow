@@ -22,11 +22,11 @@
 int LibroCalificaciones::obtenerNotaMinima() {
 	
 	int caliMin = 100;
-	for (int colum = 0; colum < EXAMENES; colum++)
+	for (int colum = 0; colum < ESTUDIANTES; colum++)
 	{
-		for (int fila = 0; fila < ESTUDIANTES; fila++)
+		for (int fila = 0; fila < EXAMENES; fila++)
 		{
-			if (calificaciones[fila][colum] < caliMin)
+			if (calificaciones[colum][fila] < caliMin)
 			{
 				caliMin = calificaciones[colum][fila];
 			}
@@ -41,11 +41,11 @@ int LibroCalificaciones::obtenerNotaMinima() {
 int LibroCalificaciones::obtenerNotaMaxima() {
 
 	int caliMax = 0;
-	for (int colum = 0; colum < EXAMENES; colum++) 
+	for (int colum = 0; colum < ESTUDIANTES; colum++) 
 	{
-		for (int fila = 0; fila < ESTUDIANTES; fila++) 
+		for (int fila = 0; fila < EXAMENES; fila++) 
 		{
-			if (calificaciones[fila][colum] > caliMax)
+			if (calificaciones[colum][fila] > caliMax)
 			{
 				caliMax = calificaciones[colum][fila];
 			}
@@ -55,13 +55,13 @@ int LibroCalificaciones::obtenerNotaMaxima() {
 	return caliMax;
 }
 
-double LibroCalificaciones::obtenerPromedio(const int[], const int fila)
+double LibroCalificaciones::obtenerPromedio(const int est, const int colum)
 {
-	int nota = 0;
+	float nota = 0;
 	
-		for (int colum = 0; colum < EXAMENES; colum++)
+		for (int fila = 0; fila < EXAMENES; fila++)
 		{
-			nota = nota + calificaciones[fila][colum];
+			nota = nota + calificaciones[est][fila];
 		}
 
 		nota = nota / 3;
@@ -72,15 +72,15 @@ LibroCalificaciones::LibroCalificaciones()
 {
 }
 
-LibroCalificaciones::LibroCalificaciones(const std::string& nombreCurso, int calificaciones[ESTUDIANTES][EXAMENES])
+LibroCalificaciones::LibroCalificaciones(const std::string& nombreCurso, int arregloCalificaciones[ESTUDIANTES][EXAMENES])
 {
 	setNombreCurso(nombreCurso);
 
-	for (int colum = 0; colum < EXAMENES; colum++)
+	for (int fila = 0; fila < ESTUDIANTES; fila++)
 	{
-		for (int fila = 0; colum < ESTUDIANTES; fila++)
+		for (int colum = 0; colum < EXAMENES; colum++)
 		{
-			calificaciones[colum][fila];
+			calificaciones[fila][colum] = arregloCalificaciones[fila][colum];
 		}
 	}
 
@@ -88,27 +88,25 @@ LibroCalificaciones::LibroCalificaciones(const std::string& nombreCurso, int cal
 
 std::string LibroCalificaciones::obtenerReporteNotas()
 {
-	std::string reporte = "";
-	std::string nombreCur = getNombreCurso();
-	int columna = 0;
 
-	reporte = reporte + "\n Las siguientes son las notas del curso [" + nombreCur + "]:"
-		+ "\n\t\t\t\tExamen 1\tExamen 2\tExamen 3\tPromedio";
+		std::string reporte = "";
+		std::string titulo = "\nLas siguientes son las notas del curso [" + getNombreCurso() + "]: \n\t\t\t\tExamen 1\tExamen 2\tExamen 3\tPromedio";
 
-		for (int fila = 0; fila < ESTUDIANTES; fila++)
-		{
-			while (columna <= 2)
-			{
-				int est = fila;
-				reporte = reporte + "\nEstudiante [" + std::to_string(est) + "]\t\t\t" +
-					std::to_string(calificaciones[est][columna]) + "\t\t\n";
-				columna++;
-			}
-			columna = 0;
+		for (int estudiante = 0; estudiante < ESTUDIANTES; estudiante++) {
+
+			int est = estudiante;
+			reporte = reporte + "\nEstudiante [" + std::to_string(estudiante+1) + "]\t\t\t" + std::to_string(calificaciones[estudiante][0]) + "\t\t"
+				+ std::to_string(calificaciones[estudiante][1]) + "\t\t" + std::to_string(calificaciones[estudiante][2]) + "\t\t" + std::to_string(obtenerPromedio(estudiante, 3)) + "";
 		}
 
+		return titulo + reporte;
+		
 
-		return reporte;
+
+
+
+
+	
 }
 
 std::string LibroCalificaciones::obtenerReporteNotasMaxMin()

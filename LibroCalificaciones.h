@@ -20,19 +20,21 @@
 #include <iostream>
 #include <array>
 
+static const int ESTUDIANTES = 10;
+static const int EXAMENES = 3;
+
 class LibroCalificaciones {
 
 private:
 
-	static const int ESTUDIANTES = 10;
-	static const int EXAMENES = 3;
-	std::string nombreCurso = "Curso Progra I"; 
+
+	std::string nombreCurso; 
 	int calificaciones [ESTUDIANTES][EXAMENES];
 
 	//Metodos
 	int obtenerNotaMinima();
 	int obtenerNotaMaxima();
-	double obtenerPromedio(const int[], const int);
+	double obtenerPromedio(const int, const int);
 
 public:
 

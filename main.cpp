@@ -32,5 +32,6 @@ int main() {
 
 	std::cout << obj1.obtenerReporteNotas() << std::endl;
 	std::cout << obj1.obtenerReporteNotasMaxMin() << std::endl;
+	system("pause");
 	return 0;
 }
